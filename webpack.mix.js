@@ -11,8 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.sass("resources/sass/style.scss", "public/css/");
-mix.copy('node_modules/admin-lte/plugins', 'public/admin-lte/plugins');
-mix.copy('node_modules/admin-lte/dist', 'public/admin-lte/dist');
-mix.copy('node_modules/admin-lte/build', 'public/admin-lte/build');
-mix.copy('node_modules/admin-lte/bower_components', 'public/admin-lte/bower_components');
+mix.js('resources/js/app.js', 'public/js')
+    .postCss('resources/css/app.css', 'public/css', [
+        require('postcss-import'),
+        require('tailwindcss'),
+    ])
+    .webpackConfig(require('./webpack.config'));

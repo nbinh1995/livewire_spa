@@ -2,32 +2,30 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Jetstream\HasTeams;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
-    use SoftDeletes;
+    use HasApiTokens;
+    use HasFactory;
+    use HasProfilePhoto;
+    use HasTeams;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
 
-    const PRIMARY_KEY_TABLE = 'id';
-
-    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'address',
-        'phone',
-        'last_login_at',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -38,6 +36,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**
@@ -47,11 +47,14 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'last_login_at' => 'datetime'
     ];
 
-    public function bills()
-    {
-        return $this->hasMany(Bill::class, Bill::FOREIGN_KEY_USER, self::PRIMARY_KEY_TABLE)->orderBy('id', 'DESC');
-    }
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'profile_photo_url',
+    ];
 }

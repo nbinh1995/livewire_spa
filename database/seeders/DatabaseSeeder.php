@@ -7,12 +7,14 @@ use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Category;
 use App\Models\CategoryAttr;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductAttr;
 use App\Models\ProductImage;
 use App\Models\Provider;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 
@@ -30,36 +32,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        Admin::create([
+        User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
         ]);
 
-        User::create([
-            'name' => 'ntqb',
-            'email' => 'ntqb@gmail.com',
+        Customer::create([
+            'name' => 'customer1',
+            'email' => 'customer1@gmail.com',
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
             'phone' => '0123123123',
             'address' => 'Hue',
         ]);
 
-        User::create([
-            'name' => 'ntqb1',
-            'email' => 'ntqb1@gmail.com',
+        Customer::create([
+            'name' => 'customer2',
+            'email' => 'customer2@gmail.com',
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => Hash::make('password'), // password
             'remember_token' => Str::random(10),
             'phone' => '0123123123',
             'address' => 'Hue',
         ]);
 
-        User::factory(15)->create();
+        Customer::factory(15)->create();
 
         foreach ($this->categories as  $category) {
             Category::create(['name' => $category, 'slug' => Str::slug($category), 'meta_title' => $category]);

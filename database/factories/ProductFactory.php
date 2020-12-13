@@ -23,11 +23,13 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'category_id' => rand(1, 3),
-            'name' => $title = 'Product_' . rand(10000, 99999),
-            'meta_title' => $title,
+            'brand_id' => rand(1, 5),
+            'sku' => Str::upper(Str::random(20)),
+            'name' => $title = 'Product_' . Str::upper(Str::random(10)),
             'slug' => Str::slug($title),
             'description' => $this->faker->paragraph(3),
+            'quantity' => rand(1000, 4000),
+            'weight' => rand(1, 3),
             'price' => rand(400000, 1500000),
             'is_new' => rand(0, 1),
         ];

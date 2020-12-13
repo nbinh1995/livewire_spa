@@ -57,7 +57,7 @@ class Category extends Model
         $attrs = $this->getCategoryAttrs();
         $html = [];
         foreach ($attrs as $attr) {
-            $html[] = "<span class='btn btn-outline-primary btn-xs'>{$attr->attr_name}</span>";
+            $html[] = "<span class='label label-primary label-xs'>{$attr->attr_name}</span>";
         }
         return implode(" ", $html);
     }

@@ -17,7 +17,6 @@ class CreateProvidersTable extends Migration
             $table->id();
             $table->string('method');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
